@@ -7,17 +7,16 @@
   "startup": "services",
   "boot": "auto",
   "map": ["media:rw"],
-  "environment": {
-    "TZ": "America/Sao_Paulo"
-  },
   "options": {
     "rtsp_url": "",
     "segment_time": 300,
-    "retention_days": 7
+    "retention_days": 7,
+    "timezone": "America/Sao_Paulo"
   },
   "schema": {
     "rtsp_url": "str",
     "segment_time": "int",
-    "retention_days": "int"
+    "retention_days": "int",
+    "timezone": "str"
   }
 }
