@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-RUN apk add --no-cache ffmpeg bash jq
+RUN apk add --no-cache ffmpeg jq
 
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
