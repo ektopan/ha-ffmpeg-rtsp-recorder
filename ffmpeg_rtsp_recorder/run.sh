@@ -1,5 +1,25 @@
 #!/bin/sh
 
+TZ_VALUE=$(jq -r '.timezone' /data/options.json)
+
+if [ -z "$TZ_VALUE" ] || [ "$TZ_VALUE" = "null" ]; then
+  TZ_VALUE="UTC"
+fi
+
+export TZ="$TZ_VALUE"
+
+# Aplica timezone no sistema (importante pro strftime)
+if [ -f "/usr/share/zoneinfo/$TZ_VALUE" ]; then
+  ln -sf "/usr/share/zoneinfo/$TZ_VALUE" /etc/localtime
+  echo "$TZ_VALUE" > /etc/timezone
+else
+  echo "⚠️ Timezone inválido: $TZ_VALUE (usando UTC)"
+  export TZ="UTC"
+  ln -sf "/usr/share/zoneinfo/UTC" /etc/localtime
+  echo "UTC" > /etc/timezone
+fi
+
+
 RTSP_URL=$(jq -r '.rtsp_url' /data/options.json)
 SEGMENT_TIME=$(jq -r '.segment_time' /data/options.json)
 RETENTION_DAYS=$(jq -r '.retention_days' /data/options.json)
