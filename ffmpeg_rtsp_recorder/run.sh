@@ -9,7 +9,7 @@ echo "Iniciando gravação RTSP..."
 echo "RTSP: $RTSP_URL"
 echo "Segmentos: ${SEGMENT_TIME}s"
 
-exec ffmpeg -rtsp_transport tcp \
+ffmpeg -rtsp_transport tcp \
   -i "$RTSP_URL" \
   -c copy \
   -f segment \
@@ -17,3 +17,4 @@ exec ffmpeg -rtsp_transport tcp \
   -reset_timestamps 1 \
   -strftime 1 \
   /media/cameras/a31/a31_%Y%m%d_%H%M%S.mp4
+
