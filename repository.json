@@ -1,5 +1,5 @@
 {
-  "name": "Custom Home Assistant Add-ons",
-  "url": "https://github.com/SEU_USUARIO/ha-ffmpeg-rtsp-recorder",
-  "maintainer": "Seu Nome <email@exemplo.com>"
+  "name": "FFmpeg RTSP Recorder Add-ons",
+  "url": "https://github.com/ektopan/ha-ffmpeg-rtsp-recorder.git",
+  "maintainer": "Eduardo Kaefer Topan <ektopan@gmail.com>"
 }
