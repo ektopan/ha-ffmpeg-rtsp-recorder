@@ -11,6 +11,7 @@ echo "Segmentos: ${SEGMENT_TIME}s"
 
 ffmpeg -rtsp_transport tcp \
   -i "$RTSP_URL" \
+  -an \
   -c copy \
   -f segment \
   -segment_time "$SEGMENT_TIME" \
