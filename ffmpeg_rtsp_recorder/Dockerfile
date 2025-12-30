@@ -1,6 +1,6 @@
-FROM ghcr.io/home-assistant/base:latest
+FROM alpine:3.19
 
-RUN apk add --no-cache ffmpeg
+RUN apk add --no-cache ffmpeg bash jq
 
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
