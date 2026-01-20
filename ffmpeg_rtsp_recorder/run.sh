@@ -67,7 +67,8 @@ exec ffmpeg -rtsp_transport tcp \
   -fflags +genpts+igndts \
   -i "$RTSP_URL" \
   -c:v copy \
-  -c:a aac -b:a 64k \
+  -af aresample=async=1:first_pts=0 \
+  -c:a aac -b:a 48k \
   -f segment \
   -segment_time "$SEGMENT_TIME" \
   -reset_timestamps 1 \
