@@ -55,7 +55,7 @@ else
 fi
 
 # =============================
-# START (com reconexão)
+# START (auto-restart + timeout maior)
 # =============================
 echo "🎥 Iniciando gravação RTSP..."
 echo "RTSP: $RTSP_URL"
@@ -66,9 +66,8 @@ while true; do
   echo "🚀 Subindo ffmpeg..."
 
   ffmpeg -rtsp_transport tcp \
-    -reconnect 1 \
-    -reconnect_streamed 1 \
-    -reconnect_delay_max 10 \
+    -stimeout 30000000 \
+    -rw_timeout 30000000 \
     -use_wallclock_as_timestamps 1 \
     -fflags +genpts+igndts \
     -i "$RTSP_URL" \
@@ -82,6 +81,6 @@ while true; do
     -segment_format_options movflags=+faststart \
     "$MEDIA_DIR/a31_%Y%m%d_%H%M%S.mp4"
 
-  echo "⚠️ ffmpeg caiu ou perdeu conexão. Tentando novamente em 5s..."
+  echo "⚠️ ffmpeg caiu ou travou RTSP. Tentando novamente em 5s..."
   sleep 5
 done
