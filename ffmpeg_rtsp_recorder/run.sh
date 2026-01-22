@@ -55,22 +55,33 @@ else
 fi
 
 # =============================
-# START
+# START (com reconexão)
 # =============================
 echo "🎥 Iniciando gravação RTSP..."
 echo "RTSP: $RTSP_URL"
 echo "Segmentos: ${SEGMENT_TIME}s"
 echo "Saída: $MEDIA_DIR/a31_%Y%m%d_%H%M%S.mp4"
 
-exec ffmpeg -rtsp_transport tcp \
-  -use_wallclock_as_timestamps 1 \
-  -fflags +genpts+igndts \
-  -i "$RTSP_URL" \
-  -c:v copy \
-  -af aresample=async=1:first_pts=0 \
-  -c:a aac -b:a 48k \
-  -f segment \
-  -segment_time "$SEGMENT_TIME" \
-  -reset_timestamps 1 \
-  -strftime 1 \
-  "$MEDIA_DIR/a31_%Y%m%d_%H%M%S.mp4"
+while true; do
+  echo "🚀 Subindo ffmpeg..."
+
+  ffmpeg -rtsp_transport tcp \
+    -reconnect 1 \
+    -reconnect_streamed 1 \
+    -reconnect_delay_max 10 \
+    -use_wallclock_as_timestamps 1 \
+    -fflags +genpts+igndts \
+    -i "$RTSP_URL" \
+    -c:v copy \
+    -af aresample=async=1:first_pts=0 \
+    -c:a aac -b:a 48k \
+    -f segment \
+    -segment_time "$SEGMENT_TIME" \
+    -reset_timestamps 1 \
+    -strftime 1 \
+    -segment_format_options movflags=+faststart \
+    "$MEDIA_DIR/a31_%Y%m%d_%H%M%S.mp4"
+
+  echo "⚠️ ffmpeg caiu ou perdeu conexão. Tentando novamente em 5s..."
+  sleep 5
+done
