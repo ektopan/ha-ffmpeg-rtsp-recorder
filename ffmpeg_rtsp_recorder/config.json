@@ -1,6 +1,6 @@
 {
   "name": "FFmpeg RTSP Recorder",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "slug": "ffmpeg_rtsp_recorder",
   "description": "Grava câmera RTSP em arquivos MP4",
   "arch": ["amd64", "aarch64"],
