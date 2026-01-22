@@ -55,7 +55,7 @@ else
 fi
 
 # =============================
-# START (auto-restart + watchdog)
+# START
 # =============================
 echo "🎥 Iniciando gravação RTSP..."
 echo "RTSP: $RTSP_URL"
@@ -65,8 +65,7 @@ echo "Saída: $MEDIA_DIR/a31_%Y%m%d_%H%M%S.mp4"
 while true; do
   echo "🚀 Subindo ffmpeg..."
 
-  # watchdog: se travar por muito tempo, mata e reinicia
-  timeout 3600 ffmpeg -rtsp_transport tcp \
+  ffmpeg -rtsp_transport tcp \
     -use_wallclock_as_timestamps 1 \
     -fflags +genpts+igndts \
     -i "$RTSP_URL" \
@@ -77,9 +76,8 @@ while true; do
     -segment_time "$SEGMENT_TIME" \
     -reset_timestamps 1 \
     -strftime 1 \
-    -segment_format_options movflags=+faststart \
     "$MEDIA_DIR/a31_%Y%m%d_%H%M%S.mp4"
 
-  echo "⚠️ ffmpeg caiu/travou ou watchdog matou. Tentando novamente em 5s..."
+  echo "⚠️ ffmpeg caiu. Tentando novamente em 5s..."
   sleep 5
 done
