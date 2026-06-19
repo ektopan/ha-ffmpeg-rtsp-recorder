@@ -71,7 +71,6 @@ while true; do
   echo "🚀 Subindo ffmpeg..."
   ffmpeg -rtsp_transport tcp \
     -timeout 15000000 \
-    -rw_timeout 15000000 \
     -use_wallclock_as_timestamps 1 \
     -fflags +genpts+igndts \
     -i "$RTSP_URL" \
